@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "docker-context-guard"
+version = "0.1.0"
+description = "Audit Docker build contexts for oversized, secret-looking, and ignored-by-mistake files."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE.md"]
+authors = [{ name = "Docker Context Guard contributors" }]
+keywords = ["docker", "dockerignore", "build-context", "devops", "ci"]
+
+[project.scripts]
+docker-context-guard = "docker_context_guard:main"
+
+[tool.setuptools]
+py-modules = ["docker_context_guard"]
