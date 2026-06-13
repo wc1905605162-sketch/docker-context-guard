@@ -110,6 +110,10 @@ def check_docs() -> None:
     for expected in ("using: composite", "docker-context-guard", "github.action_path", "actions/setup-python@v6"):
         if expected not in action:
             raise SystemExit(f"action.yml is missing {expected}")
+    for lineno, line in enumerate(action.splitlines(), start=1):
+        stripped = line.strip()
+        if stripped.startswith("description: ") and not stripped.removeprefix("description: ").startswith('"'):
+            raise SystemExit(f"action.yml description must be quoted on line {lineno}")
 
     pre_commit = (ROOT / ".pre-commit-hooks.yaml").read_text(encoding="utf-8")
     for expected in ("id: docker-context-guard", "pass_filenames: false", "language: python"):

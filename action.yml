@@ -1,29 +1,29 @@
-name: Docker Context Guard
-description: Audit Docker build contexts before docker build uploads them.
+name: "Docker Context Guard"
+description: "Audit Docker build contexts before docker build uploads them."
 branding:
   icon: shield
   color: blue
 inputs:
   context:
-    description: Directory to scan as the Docker build context.
+    description: "Directory to scan as the Docker build context."
     required: false
     default: "."
   dockerfile:
-    description: Optional Dockerfile path, relative to the context directory.
+    description: "Optional Dockerfile path, relative to the context directory."
     required: false
     default: ""
   max-size-mb:
-    description: Maximum included context size before reporting DCG004.
+    description: "Maximum included context size before reporting DCG004."
     required: false
     default: "100"
   fail-on:
-    description: Minimum severity that should fail the workflow: none, low, medium, or high.
+    description: "Minimum severity that should fail the workflow: none, low, medium, or high."
     required: false
-    default: high
+    default: "high"
   format:
-    description: Output format: text or json.
+    description: "Output format: text or json."
     required: false
-    default: text
+    default: "text"
 runs:
   using: composite
   steps:
