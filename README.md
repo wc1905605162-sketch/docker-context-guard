@@ -1,5 +1,7 @@
 # Docker Context Guard
 
+[![CI](https://github.com/wc1905605162-sketch/docker-context-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/wc1905605162-sketch/docker-context-guard/actions/workflows/ci.yml)
+
 Audit a Docker build context before `docker build` uploads it.
 
 在 `docker build` 上传构建上下文之前，先检查本地目录里会被送进 builder 的文件。
@@ -28,6 +30,16 @@ It is not a vulnerability scanner and it does not claim byte-for-byte Docker par
 
 ## Quick Start / 快速开始
 
+Try the included risky fixture:
+
+试一下仓库里的风险 fixture：
+
+```bash
+git clone https://github.com/wc1905605162-sketch/docker-context-guard.git
+cd docker-context-guard
+python docker_context_guard.py examples/risky-node --fail-on none
+```
+
 Run from source:
 
 从源码运行：
@@ -51,6 +63,37 @@ Use JSON in CI:
 
 ```bash
 docker-context-guard . --format json --fail-on high
+```
+
+Use as a GitHub Action:
+
+作为 GitHub Action 使用：
+
+```yaml
+name: docker-context-guard
+
+on: [pull_request]
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: wc1905605162-sketch/docker-context-guard@v0.1.0
+        with:
+          fail-on: high
+```
+
+Use as a pre-commit hook:
+
+作为 pre-commit hook 使用：
+
+```yaml
+repos:
+  - repo: https://github.com/wc1905605162-sketch/docker-context-guard
+    rev: v0.1.0
+    hooks:
+      - id: docker-context-guard
 ```
 
 Scan a custom Dockerfile and size budget:
@@ -176,9 +219,20 @@ Exit codes:
 
 ## GitHub Actions
 
-After publishing the repository, this can run as a normal Python CLI step:
+Recommended:
 
-仓库发布后，可以作为普通 Python CLI step 运行：
+推荐：
+
+```yaml
+- uses: wc1905605162-sketch/docker-context-guard@v0.1.0
+  with:
+    context: .
+    fail-on: high
+```
+
+If you prefer a plain Python CLI step:
+
+如果你更想用普通 Python CLI step：
 
 ```yaml
 name: docker-context-guard

@@ -36,6 +36,10 @@ Release documentation checks cover:
 - bilingual English/Chinese README
 - public product brief
 - launch plan
+- launch drafts
+- release notes
+- GitHub Action wrapper
+- pre-commit hook entry
 - release manifest
 - prepublish gate documentation
 
@@ -77,3 +81,4 @@ node_modules/
 - `.dockerignore` pattern matching is intentionally simplified and should not be described as Docker-equivalent.
 - Broad `COPY` detection is line-oriented and does not cover every Dockerfile form.
 - Filename-based secret detection is a triage signal, not proof.
+- The GitHub Action wrapper is validated by static release checks and repository CI, but still needs a real downstream workflow user.

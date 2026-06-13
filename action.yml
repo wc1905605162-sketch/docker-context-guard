@@ -1,0 +1,49 @@
+name: Docker Context Guard
+description: Audit Docker build contexts before docker build uploads them.
+branding:
+  icon: shield
+  color: blue
+inputs:
+  context:
+    description: Directory to scan as the Docker build context.
+    required: false
+    default: "."
+  dockerfile:
+    description: Optional Dockerfile path, relative to the context directory.
+    required: false
+    default: ""
+  max-size-mb:
+    description: Maximum included context size before reporting DCG004.
+    required: false
+    default: "100"
+  fail-on:
+    description: Minimum severity that should fail the workflow: none, low, medium, or high.
+    required: false
+    default: high
+  format:
+    description: Output format: text or json.
+    required: false
+    default: text
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - name: Install Docker Context Guard
+      shell: bash
+      run: python -m pip install "${{ github.action_path }}"
+    - name: Run Docker Context Guard
+      shell: bash
+      env:
+        DCG_CONTEXT: ${{ inputs.context }}
+        DCG_DOCKERFILE: ${{ inputs.dockerfile }}
+        DCG_MAX_SIZE_MB: ${{ inputs['max-size-mb'] }}
+        DCG_FAIL_ON: ${{ inputs['fail-on'] }}
+        DCG_FORMAT: ${{ inputs.format }}
+      run: |
+        args=("$DCG_CONTEXT" "--max-size-mb" "$DCG_MAX_SIZE_MB" "--fail-on" "$DCG_FAIL_ON" "--format" "$DCG_FORMAT")
+        if [ -n "$DCG_DOCKERFILE" ]; then
+          args+=("--dockerfile" "$DCG_DOCKERFILE")
+        fi
+        docker-context-guard "${args[@]}"

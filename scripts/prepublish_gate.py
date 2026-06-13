@@ -19,14 +19,18 @@ PYTHON = sys.executable
 PUBLIC_FILES = {
     ".github/workflows/ci.yml",
     ".gitignore",
+    ".pre-commit-hooks.yaml",
     "AGENTS.md",
     "LICENSE.md",
     "MANIFEST.in",
     "README.md",
+    "action.yml",
     "docker_context_guard.py",
+    "docs/launch-drafts.md",
     "docs/launch-plan.md",
     "docs/product-brief.md",
     "docs/release-manifest.md",
+    "docs/release-notes-v0.1.0.md",
     "docs/validation-report.md",
     "examples/risky-node/Dockerfile",
     "examples/risky-node/build/bundle.js",
@@ -44,7 +48,6 @@ FORBIDDEN_TEXT = (
     "/mnt/" + "hgfs",
     "agent" + "-market-lab",
     "Agent " + "Brief",
-    "wc190" + "5605162",
 )
 
 IGNORED_PARTS = {".git", "__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache", ".venv", ".release-venv"}
@@ -83,6 +86,9 @@ def check_docs() -> None:
         "Dockle",
         "dive",
         "--fail-on",
+        "GitHub Action",
+        "pre-commit",
+        "v0.1.0",
     ]
     missing = [item for item in required if item not in readme]
     if missing:
@@ -92,6 +98,21 @@ def check_docs() -> None:
     for file_name in sorted(PUBLIC_FILES):
         if file_name not in manifest:
             raise SystemExit(f"release manifest is missing {file_name}")
+
+    package_manifest = (ROOT / "MANIFEST.in").read_text(encoding="utf-8")
+    for expected in ("include action.yml", "include .pre-commit-hooks.yaml"):
+        if expected not in package_manifest:
+            raise SystemExit(f"MANIFEST.in is missing {expected}")
+
+    action = (ROOT / "action.yml").read_text(encoding="utf-8")
+    for expected in ("using: composite", "docker-context-guard", "github.action_path"):
+        if expected not in action:
+            raise SystemExit(f"action.yml is missing {expected}")
+
+    pre_commit = (ROOT / ".pre-commit-hooks.yaml").read_text(encoding="utf-8")
+    for expected in ("id: docker-context-guard", "pass_filenames: false", "language: python"):
+        if expected not in pre_commit:
+            raise SystemExit(f".pre-commit-hooks.yaml is missing {expected}")
 
 
 def check_sample_outputs() -> None:

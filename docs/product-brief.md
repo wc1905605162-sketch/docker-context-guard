@@ -30,6 +30,8 @@ MVP:
 - zero runtime dependencies
 - text and JSON output
 - fail threshold for CI
+- GitHub Action wrapper
+- pre-commit hook entry
 - local synthetic fixtures and unit tests
 - release gate that checks docs, tests, package build, install, and public-file hygiene
 
@@ -58,7 +60,7 @@ To have a shot at 150 GitHub stars, the repo needs to be easy to understand in u
 
 1. Name and README promise must be concrete: "audit Docker build context before upload."
 2. Demo must show an instantly recognizable failure: `node_modules`, `build`, and `local.env`.
-3. Install must be one Python command from source, then later `pipx` or PyPI.
+3. Install must be one Python command from source, plus copyable GitHub Action and pre-commit snippets.
 4. Launch copy should compare against known tools without attacking them.
 5. First distribution should target Docker/Fly.io/Render/Railway/devops channels where slow deploy pain is already discussed.
 
@@ -66,5 +68,5 @@ To have a shot at 150 GitHub stars, the repo needs to be easy to understand in u
 
 - Is exact `.dockerignore` parity important enough to justify using Docker's patternmatcher semantics later?
 - Should the next release include SARIF output for GitHub code scanning?
-- Should there be a dedicated GitHub Action wrapper, or is a Python CLI step enough for the first release?
+- Does the GitHub Action wrapper need SARIF output to be compelling in real CI?
 - Would examples for Node, Python, Rust, and monorepos improve credibility enough to justify extra fixtures?

@@ -1,0 +1,7 @@
+- id: docker-context-guard
+  name: Docker Context Guard
+  description: Audit Docker build contexts before docker build uploads them.
+  entry: docker-context-guard
+  language: python
+  pass_filenames: false
+  args: ["."]

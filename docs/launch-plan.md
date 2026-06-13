@@ -23,7 +23,8 @@ Do not post until the human owner approves.
 | Reddit r/docker | "I made a tiny preflight check for missing .dockerignore and oversized contexts" | Practical feedback, not only upvotes |
 | dev.to | Tutorial around fixing a slow Node Docker build | Bookmarks and comments |
 | Fly.io/Render/Railway communities | Remote builders make context upload pain visible | Maintainer/user feedback |
-| GitHub Action Marketplace later | Package CLI as action if CI demand appears | Users ask for `uses:` integration |
+| GitHub Action Marketplace | Root `action.yml` lets users run `uses: wc1905605162-sketch/docker-context-guard@v0.1.0` | Workflow usage, issues asking for CI features |
+| pre-commit | `.pre-commit-hooks.yaml` supports local guardrails before PRs | Stars from teams that already use pre-commit |
 
 ## GitHub Topics
 
@@ -31,12 +32,14 @@ Do not post until the human owner approves.
 
 ## Release Checklist
 
-- [ ] Repository is public.
-- [ ] README renders cleanly on GitHub.
-- [ ] `python scripts/prepublish_gate.py` passes from a fresh checkout.
+- [x] Repository is public.
+- [x] README renders cleanly on GitHub.
+- [x] `python scripts/prepublish_gate.py` passes from a fresh checkout.
+- [x] GitHub Action wrapper is present.
+- [x] pre-commit hook entry is present.
 - [ ] First issue templates are optional, not required.
 - [ ] No internal paths, lab notes, or unpublished user identity in public files.
-- [ ] Create one demo GIF or screenshot only after repo URL is stable.
+- [ ] Create one demo GIF or screenshot.
 - [ ] Draft launch posts remain unsent until human approval.
 
 ## Star Strategy
@@ -46,14 +49,13 @@ The first 150 stars likely come from usefulness plus clarity, not feature volume
 High-leverage improvements after launch:
 
 1. Add SARIF output for GitHub code scanning.
-2. Add a tiny GitHub Action wrapper.
+2. Add Marketplace-oriented examples for the GitHub Action wrapper.
 3. Add more fixtures: Node, Python, Rust, monorepo, nested Dockerfile.
 4. Add a `--print-dockerignore-patch` mode.
 5. Document false positives and parity gaps in public issues.
 
 ## Blocked Until Authorization
 
-- Creating or pushing the GitHub repository.
 - Posting launch threads.
 - Replying in public issue/discussion threads.
 - Submitting to newsletters or directories.

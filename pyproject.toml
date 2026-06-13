@@ -13,6 +13,11 @@ license-files = ["LICENSE.md"]
 authors = [{ name = "Docker Context Guard contributors" }]
 keywords = ["docker", "dockerignore", "build-context", "devops", "ci"]
 
+[project.urls]
+Homepage = "https://github.com/wc1905605162-sketch/docker-context-guard"
+Repository = "https://github.com/wc1905605162-sketch/docker-context-guard"
+Issues = "https://github.com/wc1905605162-sketch/docker-context-guard/issues"
+
 [project.scripts]
 docker-context-guard = "docker_context_guard:main"
 
