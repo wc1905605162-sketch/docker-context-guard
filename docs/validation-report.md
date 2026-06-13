@@ -40,6 +40,7 @@ Release documentation checks cover:
 - release notes
 - GitHub Action wrapper
 - pre-commit hook entry
+- CI action-smoke job that runs the local composite action
 - release manifest
 - prepublish gate documentation
 

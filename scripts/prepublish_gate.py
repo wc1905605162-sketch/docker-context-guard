@@ -89,6 +89,8 @@ def check_docs() -> None:
         "GitHub Action",
         "pre-commit",
         "v0.1.0",
+        "actions/checkout@v6",
+        "actions/setup-python@v6",
     ]
     missing = [item for item in required if item not in readme]
     if missing:
@@ -105,7 +107,7 @@ def check_docs() -> None:
             raise SystemExit(f"MANIFEST.in is missing {expected}")
 
     action = (ROOT / "action.yml").read_text(encoding="utf-8")
-    for expected in ("using: composite", "docker-context-guard", "github.action_path"):
+    for expected in ("using: composite", "docker-context-guard", "github.action_path", "actions/setup-python@v6"):
         if expected not in action:
             raise SystemExit(f"action.yml is missing {expected}")
 
